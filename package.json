@@ -7,7 +7,7 @@
     "private": true,
     "scripts": {
         "ng": "node --max_old_space_size=10000 ./node_modules/@angular/cli/bin/ng",
-        "start": "ng serve",
+        "start": "node --max_old_space_size=4192 ./node_modules/@angular/cli/bin/ng serve",
         "build": "ng build",
         "watch": "ng build --watch --configuration development",
         "test": "ng test",

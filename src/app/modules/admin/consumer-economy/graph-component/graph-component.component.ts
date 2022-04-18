@@ -131,6 +131,12 @@ export class GraphComponentComponent extends ReportUtils implements OnInit {
         this.loading = false;
     }
     else {
+      for (let index = 0; index < this.graphData.type.length; index++) {
+        if(typeof this.graphData.type[index] == 'string'){
+         let str =  this.graphData.type[index].replace(/'/g, '"');
+         this.graphData.type[index] = JSON.parse(str);
+        }        
+      }
       const objKeys = Object.keys(this.graphData.type[0])
       for (let i = 0; i < objKeys.length; i++) {
         this.selectedFilters[objKeys[i]] = this.graphData.type[0][objKeys[i]];
