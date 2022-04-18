@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var reportRouter = require('./routes/reports');
 var sectionsRouter = require('./routes/sections');
 var chimpRouter = require('./routes/mailchimp');
+const db = require('./config/database');
 
 var app = express();
 
