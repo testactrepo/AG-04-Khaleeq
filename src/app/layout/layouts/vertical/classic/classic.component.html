@@ -1,0 +1,79 @@
+<!-- Navigation -->
+<fuse-vertical-navigation
+    class="bg-gray-300 dark:bg-card print:hidden"
+    [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'"
+    [navigation]="navigation"
+    [opened]="!isScreenSmall"
+    (openedChanged)="navigationToggled($event)">
+    <!-- Navigation header hook -->
+    <ng-container fuseVerticalNavigationContentHeader>
+        <!-- Logo -->
+        <div class="flex items-center h-20 p-6 pb-0 justify-center">
+            <!-- Light version -->
+            <img
+                class="dark:hidden w-40"
+                src="assets/images/logo/logo-text-on-light.png"
+                alt="Logo image">
+            <!-- Dark version -->
+            <img
+                class="hidden dark:flex w-40"
+                src="assets/images/logo/logo-for-dark.svg"
+                alt="Logo image">
+        </div>
+    </ng-container>
+</fuse-vertical-navigation>
+
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full min-w-0">
+
+    <!-- Header -->
+    <div class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-white dark:bg-opacity-10 print:hidden">
+        <!-- Navigation toggle button -->
+        <button
+            mat-icon-button
+            (click)="toggleNavigation('mainNavigation')">
+            <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+        </button> 
+        <div class="flex items-center">
+            <div class="block sm:hidden">
+                <img class="dark:hidden w-5 h-5 ml-1.5" src="assets/images/logo/logo.png" alt="ceda">
+                <img class="hidden dark:block w-5 h-5 ml-1.5" src="assets/images/logo/logo-for-dark-small.png" alt="ceda">
+            </div>
+            <ng-container *ngIf="!isNavigationOpen">
+                <div class="hidden sm:block">
+                    <img class="dark:hidden w-18 ml-1.5" src="assets/images/logo/logo-text-on-light.png" alt="ceda">
+                    <img class="hidden dark:block w-18 ml-1.5" src="assets/images/logo/logo-for-dark.svg" alt="ceda">
+                </div>
+                <span>&nbsp;|&nbsp;</span>
+            </ng-container>
+            <span class="text-lg font-semibold">Eco Meter</span>
+        </div>
+        <!-- Components -->
+        <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+                        
+            <!-- LIGHT DARK MODE BUTTON -->
+            <mat-icon svgIcon="heroicons_outline:sun"></mat-icon>
+            <mat-slide-toggle [checked]="true" (change)="setTheme($event)"></mat-slide-toggle>
+            <mat-icon svgIcon="heroicons_outline:moon"></mat-icon>
+            
+            <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
+
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-col flex-auto">
+        <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+             Otherwise, layout changes won't be registered and the view won't be updated! -->
+        <router-outlet *ngIf="true"></router-outlet>
+    </div>
+
+    <!-- Footer -->
+    <div class="relative flex flex-0 items-center justify-between w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+        <span class="font-medium text-secondary">CEDA &copy; {{currentYear}}</span>
+        
+    </div>
+
+</div>
+

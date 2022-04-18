@@ -1,0 +1,15 @@
+.mat-chip {
+    border: 1px red solid;
+    background: transparent !important;
+}
+
+.mat-icon {
+    color: red;
+    height: 20px !important;
+    min-height: 10px;
+}
+
+::ng-deep .mat-chip-list-wrapper {
+    justify-content: center;
+}
+

@@ -1,0 +1,55 @@
+<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
+  <div class="w-full sm:w-auto py-8 px-4 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
+      <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
+          <!-- Logo -->
+          <div class="w-30">
+             <img
+                class="dark:hidden w-40"
+                src="assets/images/logo/logo-text-on-light.png"
+                alt="Logo image">
+            <!-- Dark version -->
+            <img
+                class="hidden dark:flex w-40"
+                src="assets/images/logo/logo-for-dark.svg"
+                alt="Logo image">
+          </div>
+
+          <!-- Title -->
+          <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Coming Soon!</div>
+          <div class="mt-0.5">
+              Do you want to be notified when we are ready? Register below so we can notify you about the launch!
+          </div>
+
+          <!-- Coming soon form -->
+          <form
+              class="mt-8">
+
+              <!-- Email field -->
+              <mat-form-field class="w-full">
+                  <mat-label>Email address</mat-label>
+                  <input
+                      id="email"
+                      matInput>
+              </mat-form-field>
+
+              <!-- Submit button -->
+              <button
+                  class="fuse-mat-button-large w-full mt-3"
+                  mat-flat-button
+                  type="button"
+                  [color]="'primary'">
+                  <span>
+                      Notify me when you launch
+                  </span>
+              </button>
+
+              <!-- Form footer -->
+              <div class="mt-8 text-md font-medium text-secondary">
+                  This isn't a newsletter subscription. We will send one email to you when
+                  we launch and then you will be removed from the list.
+              </div>
+
+          </form>
+      </div>
+  </div>
+</div>

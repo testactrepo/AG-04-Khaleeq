@@ -1,0 +1,106 @@
+<div class="flex flex-col flex-auto w-full">
+
+  <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+
+    <!-- Title and action buttons -->
+    <div class="flex items-center justify-between w-full">
+      <div class="flex gap-2 justify-center items-center">
+        <div class="text-3xl font-semibold tracking-tight leading-8">{{pageTitle}} </div>
+        <mat-icon matTooltip="About this indicator" class="cursor-pointer" (click)="showVariableNotes()" [svgIcon]="'heroicons_solid:information-circle'" [color]="'primary'"></mat-icon>
+      </div>
+      <div class="flex items-center ml-6">
+        <button
+          class="hidden sm:inline-flex ml-3"
+          mat-flat-button
+          [color]="'primary'"
+          [matMenuTriggerFor]="menu"
+          
+        >
+          <mat-icon
+            class="icon-size-5"
+            [svgIcon]="'heroicons_solid:save'"
+          ></mat-icon>
+          <span class="ml-2">Export</span>
+        </button>
+        <mat-menu #menu="matMenu">
+          <li mat-menu-item>
+            <a (click)="exportGraph()">Export PNG</a>
+          </li>
+          <li mat-menu-item>
+            <a (click)="exportGraphasCSV()">Export CSV</a>
+          </li>
+        </mat-menu>
+
+        <!-- Actions menu (visible on xs) -->
+        <div class="sm:hidden">
+          <button
+            [matMenuTriggerFor]="actionsMenu"
+            mat-icon-button
+          >
+            <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
+          </button>
+          <mat-menu #actionsMenu="matMenu">
+            <button (click)="exportGraph()" mat-menu-item>Export PNG</button>
+            <button (click)="exportGraphasCSV()" mat-menu-item>Export CSV</button>
+            <button mat-menu-item>Settings</button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-8">
+      <!-- Visitors overview -->
+      <div *ngIf="isDataAvailable" class="sm:col-span-2 lg:col-span-3 dark flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
+        <div class="flex justify-around flex-wrap mt-10">
+          <mat-form-field appearance="fill" class="w-60 ml-5">
+            <mat-label>From</mat-label>
+            <input matInput [value]="filters.selectedMinDate" [matDatepicker]="fromPicker" [min]="filters?.minDate" [max]="filters?.maxDate">
+            <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromPicker startView="multi-year"
+            (monthSelected)="updateMinDate($event, fromPicker)"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="w-60 ml-5">
+            <mat-label>To</mat-label>
+            <input matInput [value]="filters.selectedMaxDate" [matDatepicker]="toPicker" [min]="filters?.minDate" [max]="filters?.maxDate">
+            <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+            <mat-datepicker #toPicker startView="multi-year"
+            (monthSelected)="updateMaxDate($event, toPicker)"></mat-datepicker>
+          </mat-form-field>
+          <button *ngIf="graphData?.type" (click)="openFiltersDialog()" class="w-60 mt-7 ml-5 mr-5 rounded-lg" mat-raised-button [color]="'warn'">
+            <span>Data Filters</span>
+          </button>
+        </div>
+
+        <div class="flex justify-center m-5">
+          <mat-radio-group [(ngModel)]="selectedGraphType" aria-label="Select an option">
+            <mat-radio-button #YoY *ngIf="variableDetails?.yoy" (click)="checkState($event, YoY)" class="mr-3" value="1">YoY (Year on Year)</mat-radio-button>
+            <mat-radio-button #DoD *ngIf="variableDetails?.qoq" (click)="checkState($event, DoD)" class="mr-3" value="3">QoQ (Quarter on Quarter)</mat-radio-button>
+            <mat-radio-button #MoM *ngIf="variableDetails?.mom" (click)="checkState($event, MoM)" class="mr-3" value="2">MoM (Month on Month)</mat-radio-button>
+            <mat-radio-button #WoW *ngIf="variableDetails?.wow" (click)="checkState($event, WoW)" value="4">WoW (Week on Week)</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        
+        <div class="flex items-center justify-center m-10" *ngIf="loading">
+          <button class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Processing
+          </button>
+        </div>
+        <div class="flex flex-col flex-auto mt-5 h-450" *ngIf="graph?.data?.length && !loading">
+          <plotly-plot divId="plotly-graph" [data]="graph.data" [layout]="graph.layout" [config]="graph.config"></plotly-plot>
+        </div>
+        <div class="text-red-600 ml-5 font-medium text-sm float-left">Legend can be selected/de-selected.</div>
+        <!-- <img
+                class="hidden dark:flex w-30 ml-auto p-2"
+                src="assets/images/logo/logo-for-dark.svg"
+                alt="Logo image"> -->
+      </div>
+      <div *ngIf="!isDataAvailable" class="sm:col-span-2 lg:col-span-3 dark flex-auto bg-card shadow rounded-2xl overflow-hidden text-center">
+        <span class="text-3xl font-semibold tracking-tight leading-8 text-center h-[50vh]">No data available</span>
+      </div>
+    </div>
+  </div>
+</div>

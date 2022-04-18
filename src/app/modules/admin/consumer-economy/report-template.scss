@@ -1,0 +1,32 @@
+:host {
+  .h-450 {
+    height: 450px;
+  }
+}
+
+::ng-deep .mat-radio-outer-circle {
+  border-color: maroon !important;
+}
+
+::ng-deep .mat-radio-inner-circle {
+  background-color: maroon !important;
+}
+
+mat-radio-button {
+  .mat-radio-label {
+    .mat-radio-container {
+      .mat-radio-outer-circle {
+        background-color: red;
+      }
+      .mat-radio-inner-circle {
+        background-color: red;
+      }
+    }
+  }
+}
+
+// ::ng-deep .js-plotly-plot .plotly .main-svg {overflow: visible}
+::ng-deep .js-plotly-plot .plotly .main-svg .infolayer .legend {
+  transform: translate(200px, 350px);
+  margin-bottom: 20px;
+}

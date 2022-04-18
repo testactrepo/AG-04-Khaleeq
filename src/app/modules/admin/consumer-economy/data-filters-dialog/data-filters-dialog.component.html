@@ -1,0 +1,25 @@
+<!-- <h1 mat-dialog-title>Data Filters</h1> -->
+<div class="text-3xl font-semibold tracking-tight leading-8 text-center">Data Filters</div>
+<div mat-dialog-content class="d-flex flex-column justify-center m-5 text-center overflow-hidden">
+    <div *ngFor="let obj of filtersListArray">
+      <mat-form-field class="w-40 md:w-100 lg:w-100" appearance="fill">
+        <mat-label>{{obj}}</mat-label>
+        <mat-select [(ngModel)]="selectedFilters[obj]">
+            <mat-option *ngFor="let filter of filtersList[obj]" [value]="filter">{{filter}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    </div>
+    <div *ngIf="showWarning" class="text-red-600 ml-5 font-medium text-sm justify-center">No data available for the selected filter.</div>
+</div>
+<div mat-dialog-actions class="flex justify-center">
+    <button (click)="clearFilters()" class="w-60 mb-5" mat-raised-button>
+        <span>Clear Filters</span>
+    </button>
+    <button (click)="applyFilters()" class="w-60 mb-5" mat-raised-button [color]="'warn'">
+        <span *ngIf="!loading">Apply Filters</span>
+        <svg *ngIf="loading" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+    </button>
+</div>

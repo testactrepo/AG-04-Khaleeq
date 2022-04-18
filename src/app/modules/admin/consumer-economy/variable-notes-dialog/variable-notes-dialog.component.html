@@ -1,0 +1,13 @@
+<mat-icon class="close cursor-pointer" (click)="onClose()" svgIcon="close"></mat-icon>
+<div class="text-3xl font-semibold tracking-tight leading-8 text-center">{{pageTitle}}</div>
+<div mat-dialog-content class="d-flex flex-column justify-center m-5 text-left overflow-hidden" *ngIf="variableNotes">
+    <h5 class="font-medium leading-tight text-xl mt-0 mb-2">Description</h5>
+    <p id="description" class="text-base font-light leading-relaxed mt-0 mb-4"></p>
+    <h5 class="font-medium leading-tight text-xl mt-0 mb-2">Notes</h5>
+    <p id="notes" class="text-base font-light leading-relaxed mt-0 mb-4"></p>
+    <p class="text-base font-light leading-relaxed text-right mt-0 mb-4">Credits: <cite>{{variableNotes?.credits || '--'}}</cite></p>
+</div>
+<div class="font-medium leading-tight text-xl mt-20 mb-20 mr-12 text-center" *ngIf="!variableNotes">
+    No data fetched
+</div>
+

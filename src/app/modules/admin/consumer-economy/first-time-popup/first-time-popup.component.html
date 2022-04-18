@@ -1,0 +1,40 @@
+<div class="text-3xl font-semibold tracking-tight leading-8 text-center">Let's get to know you</div>
+<div mat-dialog-content class="d-flex flex-column justify-center m-5 text-center overflow-hidden">
+    <mat-form-field class="w-30 md:w-80 lg:w-80 mr-5" appearance="fill">
+        <mat-label class="required">Occupation</mat-label>
+        <mat-select [(ngModel)]="userDetails.Occupation">
+            <mat-option *ngFor="let occupation of occupations" [value]="occupation.value">{{occupation.label}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-30 md:w-80 lg:w-80 mr-5" appearance="fill">
+        <mat-label>Affiliation</mat-label>
+        <input matInput placeholder="Enter Affiliation" [value]="userDetails.Affiliation">
+    </mat-form-field>
+    <hr class="mb-2">
+    <div class="flex flex-col text-center items-center">
+        <span class="text-2xl font-semibold">Email</span>
+        <span class="text-xs italic mb-2">used to send newsletters, CEDA will never spam you with unnecessary emails.</span>
+        <mat-form-field class="w-30 md:w-80 lg:w-80" appearance="fill">
+            <input matInput placeholder="Enter a valid Email Address" [(ngModel)]="userDetails.emailAddress">
+        </mat-form-field>
+        <div class="space-x-1">
+            <mat-checkbox>Newsletter</mat-checkbox>
+            <mat-checkbox>Events</mat-checkbox>
+            <mat-checkbox>Careers</mat-checkbox>
+        </div>
+    </div>
+    <hr>
+    <div class="text-left">
+        <mat-checkbox [(ngModel)]="userDetails.isChecked" class="example-margin">By clicking this checkbox, you agree to <a target="_blank" href="https://www.algolia.com/policies/terms/">Terms & Conditions</a> and that you have read our <a target="_blank" href="https://www.algolia.com/policies/privacy/">Privacy Policy.</a></mat-checkbox>
+        <mat-checkbox [(ngModel)]="userDetails.isSubscriptionChecked" class="mt-2">Subscribe to the newsletter.</mat-checkbox>
+    </div>
+</div>
+<div mat-dialog-actions class="flex justify-center">
+    <button [disabled]="!userDetails.isChecked || userDetails.Occupation === ''" (click)="submitForm()" class="w-60 mb-5" mat-raised-button [color]="'warn'">
+        <span *ngIf="!loading">Submit</span>
+        <svg *ngIf="loading" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+    </button>
+</div>
