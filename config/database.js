@@ -6,7 +6,7 @@ const ssh2 = require('ssh2');
 //     ready = false;
 // const privateKey = require('fs').readFileSync(__dirname + '/jigyansu');
 
-const pgURI = 'postgres://cctyjiazreqyrt:2b8cbf2df449234d0a7d4c80ee89d28c8cc3aca2ad69ffd2b6c3390269e95287@ec2-23-20-224-166.compute-1.amazonaws.com:5432/ddvvkqm00leur2';
+const pgURI = 'postgres://postgres:ecometersuperlord@ecometer-dev.cplm2pqxxfjf.ap-south-1.rds.amazonaws.com:5432/ecometer';
 client = new pg.Client(pgURI);
     client.connect(function(err) {
       console.log('Database Connected !');
